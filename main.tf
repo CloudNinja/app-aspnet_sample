@@ -1,6 +1,6 @@
 # Create a resource group
 resource "azurerm_resource_group" "aspnet_sample" {
-  name     = "rg_aspnet-sample-${var.environment}"
+  name     = "rg_cloudninja-${var.environment}"
   location = "West US"
 
   tags = var.tags
@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "aspnet_sample" {
 
 # Create an App Service Plan with Linux
 resource "azurerm_app_service_plan" "asp" {
-  name                = "cn-aspnet_sample_asp-${var.environment}"
+  name                = "cn-sample-asp-${var.environment}"
   location            = azurerm_resource_group.aspnet_sample.location
   resource_group_name = azurerm_resource_group.aspnet_sample.name
 
@@ -25,7 +25,7 @@ resource "azurerm_app_service_plan" "asp" {
 
 # Create an Azure Web App for Containers in that App Service Plan
 resource "azurerm_app_service" "app" {
-  name                = "cn-aspnet_sample_app-${var.environment}"
+  name                = "cn-sample-app-${var.environment}"
   location            = azurerm_resource_group.aspnet_sample.location
   resource_group_name = azurerm_resource_group.aspnet_sample.name
   app_service_plan_id = azurerm_app_service_plan.asp.id
