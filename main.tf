@@ -1,35 +1,6 @@
-terraform {
-  backend "remote" {
-    organization = "example-org-dbf168"
-
-    workspaces {
-      name = "aspnet_sample-test"
-    }
-  }
-
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.46.0"
-    }
-  }
-
-  required_version = ">= 0.13.0"
-}
-
-provider "azurerm" {
-  features {}
-}
-
-# Get data
-data "azurerm_container_registry" "acr" {
-  name                = "mbbacr"
-  resource_group_name = "rg_witcs_common"
-}
-
 # Create a resource group
 resource "azurerm_resource_group" "aspnet_sample" {
-  name     = "rg_aspnet-sample"
+  name     = "rg_aspnet-sample-${var.environment}"
   location = "West US"
 
   tags = var.tags
@@ -37,7 +8,7 @@ resource "azurerm_resource_group" "aspnet_sample" {
 
 # Create an App Service Plan with Linux
 resource "azurerm_app_service_plan" "asp" {
-  name                = "aspnet-sample-asp"
+  name                = "aspnet-sample-asp-${var.environment}"
   location            = azurerm_resource_group.aspnet_sample.location
   resource_group_name = azurerm_resource_group.aspnet_sample.name
 
@@ -54,7 +25,7 @@ resource "azurerm_app_service_plan" "asp" {
 
 # Create an Azure Web App for Containers in that App Service Plan
 resource "azurerm_app_service" "app" {
-  name                = "aspnet-sample-app"
+  name                = "aspnet-sample-app-${var.environment}"
   location            = azurerm_resource_group.aspnet_sample.location
   resource_group_name = azurerm_resource_group.aspnet_sample.name
   app_service_plan_id = azurerm_app_service_plan.asp.id
