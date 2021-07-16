@@ -12,6 +12,5 @@ variable "tags" {
     owner        = "Michel Bechelani"
     project      = "ASPNET Sample"
     created_date = "2021-07-15"
-    environment  = "${var.environment}"
   }
 }
