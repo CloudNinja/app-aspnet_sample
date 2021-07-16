@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "aspnet_sample" {
 
 # Create an App Service Plan with Linux
 resource "azurerm_app_service_plan" "asp" {
-  name                = "aspnet-sample-asp-${var.environment}"
+  name                = "cn-aspnet_sample_asp-${var.environment}"
   location            = azurerm_resource_group.aspnet_sample.location
   resource_group_name = azurerm_resource_group.aspnet_sample.name
 
@@ -25,7 +25,7 @@ resource "azurerm_app_service_plan" "asp" {
 
 # Create an Azure Web App for Containers in that App Service Plan
 resource "azurerm_app_service" "app" {
-  name                = "aspnet-sample-app-${var.environment}"
+  name                = "cn-aspnet_sample_app-${var.environment}"
   location            = azurerm_resource_group.aspnet_sample.location
   resource_group_name = azurerm_resource_group.aspnet_sample.name
   app_service_plan_id = azurerm_app_service_plan.asp.id
